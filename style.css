@@ -4,6 +4,10 @@
     --kvadrat: rgb(25, 25, 25);
     --textcolor: rgb(222, 222, 222);
     --tojekvadrat: rgb(25, 25, 25);
+
+    --backColor: rgb(245, 245, 245);
+    --caseColor: rgb(245, 245, 245);/*rgb(255, 255, 255);*/
+    
 }
 * {
     margin: 0;
@@ -16,20 +20,20 @@ html,
 body {
     width: 100%;
     height: 100%;
-    background-color: rgb(245, 245, 245);
+    background-color: var(--backColor);
 
 }
 
 /* @media screen and (width >= 1920px) { */
     header{
         width: 100%;
-        height: 75px;
+        height: 50px;
         /* background-color: aliceblue; */
         border-radius:0 0 25px 25px;
         display: flex;
         /* align-items: center; */
         align-items: stretch;
-        justify-content: center;
+        justify-content: space-around;
 
     }
     main {
@@ -55,27 +59,29 @@ body {
         border-radius: 25px;
     }
     .case{
-        background-color: white;
+        background-color: var(--caseColor);
         padding: 10px;
         margin-bottom: 10px;
         cursor: pointer;
-        transition: .3s;
+        transition: .5s;
     }
     .case p{
         text-wrap: wrap;
         text-align: justify;
     }
     .case:hover{
-        transform: scale(1.05);
+        /* transform: scale(1.05); */
+        box-shadow: 0px 0px 10px -5px black;
     }
     #addCase{
-        width: 75px;
-        height: 75px;
-        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        border: none;
+        /* border-radius: 50%; */
         font-size: 50px;
         cursor: pointer;
         transition: .2s;
-        background-color: none;
+        background-color: var(--backColor);
     }
     #addCase:hover{
         transform: scale(1.2);
@@ -84,10 +90,22 @@ body {
         transition: 0s;
         transform: scale(1);
     }
+    #btnLogin{
+        cursor: pointer;
+        font-size: medium;
+        border: none;
+        outline: none;
+        background-color: var(--backColor);
+        transition: .3s;
+
+    }
+    #btnLogin:hover{
+        transform: scale(1.1);
+    }
     .note{
         width: 100%;
         height: 100%;
-        background-color: white;
+        background-color: var(--backColor);
         position: absolute;
         display: none;
         align-items: center;
@@ -107,8 +125,11 @@ body {
         top: 0; left: 0; bottom: 0; right: 0;
         width: 960px;
         height: 1000px;
-        background-color: white;
+        background-color: var(--backColor);
         
+    }
+    .noteMain *{
+        background-color: var(--backColor);
     }
     .noteMain h2{
         align-self: center;       
@@ -152,14 +173,14 @@ body {
         position: absolute;
         top: 10px;
         right: 10px;
-        background-color: white;
+        /* background-color: white; */
         border: none;
         outline: none;
         cursor: pointer;
         transition: .3s;
     }
     #btnNoteClose:hover{
-        color: white;
+        color: var(--backColor);
         background-color: black;
     }
     #addNote{
@@ -170,7 +191,6 @@ body {
         outline: none;
         border: none;
         border-bottom: 2px solid black;
-        background-color: white;
         transition: .3s;
     }
     #addNote:hover{
