@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>GangBang</title>
+</head>
+
+<body>
+    <header>
+        <input type="button" id="addCase" value="+">
+        <div class="note" id="note">
+            <div class="noteMain">
+                <input type="button" id="btnNoteClose" value="X">
+                <h2>Заметка</h2>
+                <select name="" id="selectTopic">
+                    <option value="queue">Очередь</option>
+                    <option value="work">В работе</option>
+                    <option value="test">Тестирование</option>
+                    <option value="done">Готово</option>
+                </select>
+                <input type="text" id="noteh3" placeholder="Тема">
+                <textarea name="" id="noteTextArea" placeholder="Писать здесь..."></textarea>
+                <input type="button" id="addNote" value="Добавить">
+                <!-- <textarea name="" id=""></textarea> -->
+            </div>
+        </div>
+    </header>
+    <main>
+
+        <div class="topic" id="queue">
+            <h2>Очередь</h2>
+            <div class="case">
+                <h3>title</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque culpa quas est. Neque atque repellat harum. Maxime recusandae, dolore, officia aperiam tenetur voluptatibus quia nemo quisquam est, laborum veritatis assumenda!</p>
+            </div>
+            <div class="case">
+                <h3>title</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque culpa quas est. Neque atque repellat harum. Maxime recusandae, dolore, officia aperiam tenetur voluptatibus quia nemo quisquam est, laborum veritatis assumenda!</p>
+            </div>
+        </div>
+
+        <div class="topic" id="work">
+            <h2>В работе</h2>
+            <div class="case">
+                <h3>title</h3>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos impedit illo ducimus consectetur consequatur id dolorum rerum nihil laboriosam, quis obcaecati neque, nobis, recusandae nostrum adipisci alias optio saepe explicabo.</p>
+            </div>
+            <div class="case">
+                <h3>title</h3>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos impedit illo ducimus consectetur consequatur id dolorum rerum nihil laboriosam, quis obcaecati neque, nobis, recusandae nostrum adipisci alias optio saepe explicabo.</p>
+            </div>
+        </div>
+
+        <div class="topic" id="test">
+            <h2>Тестирование</h2>
+        </div>
+
+        <div class="topic" id="done">
+            <h2>Готово</h2>
+        </div>
+
+
+        <template id="tempTopic">
+            <div class="topic">
+                <h2></h2>
+            </div>
+        </template>
+
+        <template id="tempCase">
+            <div class="case">
+                <h3></h3>
+                <p></p>
+            </div>
+
+        </template>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
