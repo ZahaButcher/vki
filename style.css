@@ -90,6 +90,12 @@ body {
         transition: 0s;
         transform: scale(1);
     }
+    .caseClick{
+        /* transition-property: position; */
+        /* transition-duration: 1s; */
+        /* position: absolute; */
+        /* transform: translate(50%); */
+    }
     #btnLogin{
         cursor: pointer;
         font-size: medium;

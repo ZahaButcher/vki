@@ -39,7 +39,9 @@ cases.forEach(elem => {
     
     elem.addEventListener("click", function(){
         // console.log(elem);
-        elem.style.position = "absolute";
-        elem.style.left = "50%";
+        // elem.style.position = "absolute";
+        // elem.style.left = "50%";
+
+        elem.classList.add("caseClick");
     });
 });
