@@ -2,6 +2,8 @@ let addCase = document.getElementById("addCase");
 let addNote = document.getElementById("addNote");
 let selectTopic = document.getElementById("selectTopic");
 
+let cases = document.querySelectorAll(".case");
+
 let tempTopic = document.getElementById("tempTopic");
 let tempCase = document.getElementById("tempCase");
 
@@ -30,4 +32,14 @@ addNote.addEventListener("click", function(){
     noteTextArea.value = "";    
 
     note.style.display = "none";
+});
+
+
+cases.forEach(elem => {
+    
+    elem.addEventListener("click", function(){
+        // console.log(elem);
+        elem.style.position = "absolute";
+        elem.style.left = "50%";
+    });
 });

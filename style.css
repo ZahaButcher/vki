@@ -63,7 +63,7 @@ body {
         padding: 10px;
         margin-bottom: 10px;
         cursor: pointer;
-        transition: .5s;
+        transition: .3s;
     }
     .case p{
         text-wrap: wrap;
