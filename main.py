@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
 
 app = FastAPI()
-app.mount("/", StaticFiles(directory="public", html=True))
+app.mount("/", StaticFiles(directory="public_html", html=True))
 
 # @app.get("/")
 # def read_root():

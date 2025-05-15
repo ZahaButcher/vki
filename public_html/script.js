@@ -26,11 +26,10 @@ addNote.addEventListener("click", function(){
     let noteTextArea = document.getElementById("noteTextArea");
 
     if(!noteh3.value || !noteTextArea.value){
-        console.log("asd");
         noteh3.style.borderBottom = "2 px solid red";
         noteTextArea.style.borderBottom = "2 px solid red";
 
-        // return;
+        return;
     }
     obj.querySelector("h3").textContent = noteh3.value;
     obj.querySelector("p").textContent = noteTextArea.value;
@@ -40,11 +39,11 @@ addNote.addEventListener("click", function(){
     async function send(){
  
         // получаем введеное в поле имя и возраст
-        const username = document.getElementById("username").value;
-        const userage = document.getElementById("userage").value;
+        username = "Zaha";
+        userage = 23;
  
         // отправляем запрос
-        const response = await fetch("/hello", {
+        const response = await fetch("/about", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({ 
@@ -54,12 +53,14 @@ addNote.addEventListener("click", function(){
             });
             if (response.ok) {
                 const data = await response.json();
-                document.getElementById("message").textContent = data.message;
+                // document.getElementById("message").textContent = data.message;
+                console.log(data.message);
             }
             else
                 console.log(response);
     }
-    // note.style.display = "none";
+    // send();
+    note.style.display = "none";
 });
 
 
