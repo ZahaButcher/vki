@@ -1,3 +1,23 @@
+
+//Типо база данных записей
+let db = {
+    "Проверка":{
+        "info":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi numquam ducimus dolorum ad dolore obcaecati. Veniam, eum quis nemo adipisci praesentium natus officiis dignissimos ducimus deleniti. Corrupti deserunt illo accusantium?",
+        "author":"Барков Захар",
+        "date":"21.05.2025"
+    },
+    "Завоз":{
+        "info":"Невероятно, в университетский буфет завезли пиво!",
+        "author":"Завьялов Андрей",
+        "date":"20.05.2025"
+    },
+    "Реклама":{
+        "info":"Невероятно, в университетский дворик поставили автомасетрскую!",
+        "author":"Мирзоматов Саиджон",
+        "date":"18.05.2025"
+    }
+};
+
 let addCase = document.getElementById("addCase");
 let addNote = document.getElementById("addNote");
 // let selectTopic = document.getElementById("selectTopic");
@@ -22,6 +42,18 @@ btnNoteClose.addEventListener("click", function(){
 
 });
 
+function addNotesDb(){
+    for(let i in db){
+        // console.log(i);
+        let temp = tempCase.content.cloneNode(true);
+        temp.querySelector(".heading").textContent = i;
+        temp.querySelector(".info").textContent = db[i]["info"];
+        temp.querySelector(".author").textContent = db[i]["author"];
+        temp.querySelector(".date").textContent = db[i]["date"];
+        document.querySelector("main").append(temp);
+    }
+}
+addNotesDb();
 addNote.addEventListener("click", function(){ // Add Note
     let rd = new Date(); //row Date
     let date = `${String(rd.getDate()).padStart(2,"0")}.${String(rd.getMonth()%12+1).padStart(2,"0")}.${rd.getFullYear()}`;
@@ -74,11 +106,11 @@ addNote.addEventListener("click", function(){ // Add Note
 cases.forEach(elem => {
     
     elem.addEventListener("click", function(){
-        // console.log(elem);
-        // elem.style.position = "absolute";
-        // elem.style.left = "50%";
-
+        console.log(elem);
+        elem.classList.toggle("caseClick");
         // elem.classList.add("caseClick");
+        let no = document.createElement("div"); //no - nwe object
+        
     });
 });
 
