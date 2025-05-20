@@ -5,14 +5,16 @@ let addNote = document.getElementById("addNote");
 let cases = document.querySelectorAll(".case");
 
 // let tempTopic = document.getElementById("tempTopic");
-let tempCase = document.getElementById("tempCase");
+let tempCase = document.getElementById("tempCase"); //Шаблон заметки
 
 
 let note = document.getElementById("note");
+let noteh3 = document.getElementById("noteh3"); // Тема из окна создания
 let btnNoteClose = document.getElementById("btnNoteClose");
 
-addCase.addEventListener("click",function(){
+addCase.addEventListener("click", function(){
     note.style.display = "flex";
+    noteh3.focus();
 });
 
 btnNoteClose.addEventListener("click", function(){
@@ -23,20 +25,22 @@ btnNoteClose.addEventListener("click", function(){
 addNote.addEventListener("click", function(){ // Add Note
     let rd = new Date(); //row Date
     let date = `${String(rd.getDate()).padStart(2,"0")}.${String(rd.getMonth()%12+1).padStart(2,"0")}.${rd.getFullYear()}`;
-    console.log(date);
-    let obj = tempCase.content.cloneNode(true);
-    let noteh3 = document.getElementById("noteh3");
-    let noteTextArea = document.getElementById("noteTextArea");
+    
+    let temp = tempCase.content.cloneNode(true); //Клонировал заметку из шаблона
+    
+    let noteTextArea = document.getElementById("noteTextArea"); //Текст
 
     if(!noteh3.value || !noteTextArea.value){
-        noteh3.style.borderBottom = "2 px solid red";
+        noteh3.style.border = "2 px solid red";
         noteTextArea.style.borderBottom = "2 px solid red";
-
+        
         return;
     }
-    obj.querySelector("h3").textContent = noteh3.value;
-    obj.querySelector("p").textContent = noteTextArea.value;
-    document.querySelector("main").append(obj);
+    temp.querySelector(".heading").textContent = noteh3.value;
+    temp.querySelector(".info").textContent = noteTextArea.value;
+    temp.querySelector(".author").textContent = "Zaha";
+    temp.querySelector(".date").textContent = date;
+    document.querySelector("main").append(temp);
     noteh3.value = "";
     noteTextArea.value = "";    
     async function send(){
