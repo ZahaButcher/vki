@@ -1,10 +1,10 @@
 let addCase = document.getElementById("addCase");
 let addNote = document.getElementById("addNote");
-let selectTopic = document.getElementById("selectTopic");
+// let selectTopic = document.getElementById("selectTopic");
 
 let cases = document.querySelectorAll(".case");
 
-let tempTopic = document.getElementById("tempTopic");
+// let tempTopic = document.getElementById("tempTopic");
 let tempCase = document.getElementById("tempCase");
 
 
@@ -20,7 +20,10 @@ btnNoteClose.addEventListener("click", function(){
 
 });
 
-addNote.addEventListener("click", function(){
+addNote.addEventListener("click", function(){ // Add Note
+    let rd = new Date(); //row Date
+    let date = `${String(rd.getDate()).padStart(2,"0")}.${String(rd.getMonth()%12+1).padStart(2,"0")}.${rd.getFullYear()}`;
+    console.log(date);
     let obj = tempCase.content.cloneNode(true);
     let noteh3 = document.getElementById("noteh3");
     let noteTextArea = document.getElementById("noteTextArea");
@@ -33,7 +36,7 @@ addNote.addEventListener("click", function(){
     }
     obj.querySelector("h3").textContent = noteh3.value;
     obj.querySelector("p").textContent = noteTextArea.value;
-    document.getElementById(selectTopic.value).append(obj);
+    document.querySelector("main").append(obj);
     noteh3.value = "";
     noteTextArea.value = "";    
     async function send(){

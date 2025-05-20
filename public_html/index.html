@@ -17,12 +17,12 @@
             <div class="noteMain">
                 <input type="button" id="btnNoteClose" value="X">
                 <h2>Заметка</h2>
-                <select name="" id="selectTopic">
+                <!--<select name="" id="selectTopic">
                     <option value="queue">Очередь</option>
                     <option value="work">В работе</option>
                     <option value="test">Тестирование</option>
                     <option value="done">Готово</option>
-                </select>
+                </select>-->
                 <input type="text" id="noteh3" placeholder="Тема">
                 <textarea name="" id="noteTextArea" placeholder="Писать здесь..."></textarea>
                 <input type="submit" id="addNote" value="Добавить">
@@ -30,9 +30,33 @@
             </div>
         </div>
     </header>
-    <main>
-
-        <div class="topic" id="queue">
+    <main > <!--style="background-color: red;"-->
+        <div class="case">
+            <h3>title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque culpa quas est. Neque atque repellat harum. Maxime recusandae, dolore, officia aperiam tenetur voluptatibus quia nemo quisquam est, laborum veritatis assumenda!</p>
+        </div>
+        <div class="case">
+            <h3>title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque culpa quas est. Neque atque repellat harum. Maxime recusandae, dolore, officia aperiam tenetur voluptatibus quia nemo quisquam est, laborum veritatis assumenda!</p>
+        </div>
+        <div class="case">
+            <h3>title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque culpa quas est. Neque atque repellat harum. Maxime recusandae, dolore, officia aperiam tenetur voluptatibus quia nemo quisquam est, laborum veritatis assumenda!</p>
+        </div>
+        <div class="case">
+            <h3>title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque culpa quas est. Neque atque repellat harum. Maxime recusandae, dolore, officia aperiam tenetur voluptatibus quia nemo quisquam est, laborum veritatis assumenda!</p>
+            <p class="date">20.05.2025</p>
+        </div>
+        <div class="case">
+            <h3>title</h3>
+            <p> assumenda!</p>
+            <div class="dateAuthor">
+                <p class="author">Мирзоматов Саиджон</p>
+                <p class="date">20.05.2025</p>
+            </div>
+        </div>
+        <!--<div class="topic" id="queue">
             <h2>Очередь</h2>
             <div class="case">
                 <h3>title</h3>
@@ -69,12 +93,16 @@
             <div class="topic">
                 <h2></h2>
             </div>
-        </template>
+        </template>-->
 
         <template id="tempCase">
             <div class="case">
                 <h3></h3>
                 <p></p>
+                <div class="dateAuthor">
+                    <p class="author"></p>
+                    <p class="date"></p>
+                </div>
             </div>
 
         </template>
