@@ -2,7 +2,7 @@
 //Типо база данных записей
 let db = {
     "Проверка":{
-        "info":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi numquam ducimus dolorum ad dolore obcaecati. Veniam, eum quis nemo adipisci praesentium natus officiis dignissimos ducimus deleniti. Corrupti deserunt illo accusantium?",
+        "info":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi numquam ducimus dolorum ad dolore obcaecati. Veniam, eum quis nemo adipisci praesentium natus officiis dignissimos ducimus deleniti. Corrupti deserunt illo accusantium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi numquam ducimus dolorum ad dolore obcaecati. Veniam, eum quis nemo adipisci praesentium natus officiis dignissimos ducimus deleniti. Corrupti deserunt illo accusantium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi numquam ducimus dolorum ad dolore obcaecati. Veniam, eum quis nemo adipisci praesentium natus officiis dignissimos ducimus deleniti. Corrupti deserunt illo accusantium?",
         "author":"Барков Захар",
         "date":"21.05.2025"
     },
@@ -22,7 +22,6 @@ let addCase = document.getElementById("addCase");
 let addNote = document.getElementById("addNote");
 // let selectTopic = document.getElementById("selectTopic");
 
-let cases = document.querySelectorAll(".case");
 
 // let tempTopic = document.getElementById("tempTopic");
 let tempCase = document.getElementById("tempCase"); //Шаблон заметки
@@ -39,7 +38,7 @@ addCase.addEventListener("click", function(){
 
 btnNoteClose.addEventListener("click", function(){
     note.style.display = "none";
-
+    
 });
 
 function addNotesDb(){
@@ -53,7 +52,10 @@ function addNotesDb(){
         document.querySelector("main").append(temp);
     }
 }
+
 addNotesDb();
+let cases = document.querySelectorAll(".case");
+
 addNote.addEventListener("click", function(){ // Add Note
     let rd = new Date(); //row Date
     let date = `${String(rd.getDate()).padStart(2,"0")}.${String(rd.getMonth()%12+1).padStart(2,"0")}.${rd.getFullYear()}`;
@@ -104,11 +106,25 @@ addNote.addEventListener("click", function(){ // Add Note
 
 
 cases.forEach(elem => {
-    
+    console.log(elem);
     elem.addEventListener("click", function(){
         console.log(elem);
-        elem.classList.toggle("caseClick");
+        elem.classList.add("caseClick");
+        elem.classList.remove("case");
+        // elem.style.width = "90%";
+        // elem.style.height = "90vh";
+        // elem.style.position = "absolute";
+        // elem.style.zIndex = "9";
+        // elem.style.marginLeft = "auto";
+        // elem.style.marginRight = "auto";
+        // elem.style.left = "0";
+        // elem.style.right = "0";
+        // elem.style.textAlign = "center";
+
         // elem.classList.add("caseClick");
+        let files = document.createElement("div");
+        files.className = "files";
+        elem.append(files);
         let no = document.createElement("div"); //no - nwe object
         
     });

@@ -5,8 +5,10 @@
     --textcolor: rgb(222, 222, 222);
     --tojekvadrat: rgb(25, 25, 25);
 
-    --backColor: rgb(245, 245, 245);
-    --caseColor: rgb(245, 245, 245);/*rgb(255, 255, 255);*/
+    /* --backColor: rgb(245, 245, 245); */
+    --backColor: rgb(252, 252, 252);
+    /* --caseColor: rgb(245, 245, 245); */
+    --CaseColor: rgb(255, 255, 255);
     
 }
 * {
@@ -66,18 +68,43 @@ body {
     }
     .case{
         position: relative;
-        background-color: var(--caseColor);
+        background-color: var(--CaseColor);
         padding: 10px;
+        margin: 5px;
         margin-bottom: 5px;
+        border-radius: 16px;
+        box-shadow: 0 1px 2px #00000029;
         cursor: pointer;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: .3s;
+        /* transition: .3s; */
         width: 33%;
         height: 33vh;
         /* flex-basis: 33%; */
         /* flex-grow: 3; */
+    }
+    .caseClick{
+        background-color: var(--CaseColor);
+        padding: 10px;
+        margin: 5px;
+        width : 90%;
+        height : 90vh;
+        border-radius: 16px;
+        box-shadow: 0 1px 2px #00000029;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: justify;
+
+        position : absolute;
+        z-index : 9;
+        margin-left : auto;
+        margin-right : auto;
+        left : 0;
+        right : 0;
+        text-align : center;
+
     }
     .info{
         width: auto;
@@ -118,21 +145,7 @@ body {
         transition: 0s;
         transform: scale(1);
     }
-    .caseClick{
-        position: absolute;
-        width: 50%;
-        height: 50%;
-        transition: .3s;
-        transform: translateX(25%);
-        transform: scale(1.5);
-        top:2%;
-        left: 50%;
-        z-index: 999;
-        /* transition-property: position; */
-        /* transition-duration: 1s; */
-        /* position: absolute; */
-        /* transform: translate(50%); */
-    }
+    
     #btnLogin{
         cursor: pointer;
         font-size: medium;
@@ -237,6 +250,12 @@ body {
     }
     #addNote:hover, #addNote:focus{
         transform: scale(1.1);
+    }
+    @media screen and (width >= 1920px) {
+        .case{
+            width: 21%;
+            height: 21vh;
+        }
     }
     
 /* }  Скобка медиа скрина*/ 
