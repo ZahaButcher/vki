@@ -1,7 +1,7 @@
 from models import *
 from database import *
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import desc
+from sqlalchemy import or_, desc
 from fastapi import Depends, FastAPI, Body, HTTPException, Request, Cookie, Form
 from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -301,7 +301,33 @@ async def get_announcements(db: Session = Depends(get_db)):
                      .order_by(desc(Announcements.id))\
                      .all()
     # Сортируем по ID в обратном порядке
-    print([AnnouncementResponse.from_orm_with_author(a) for a in announcements])
+    # print([AnnouncementResponse.from_orm_with_author(a) for a in announcements])
     return [AnnouncementResponse.from_orm_with_author(a) for a in announcements]
+
+
+@app.post("/searchOld") #, response_model=List[AnnouncementResponse]
+async def get_search(search: str = Form(...), db: Session = Depends(get_db)):
+    print("mes", search)
+    return {"mes":search}
+
+@app.get("/search") #, response_model=List[AnnouncementResponse]
+async def get_search(search: str = None, db: Session = Depends(get_db)):
+    query = db.query(Announcements)\
+              .options(joinedload(Announcements.author))\
+              .order_by(desc(Announcements.id))
+    print("search", search)
+    if search:  # Если есть поисковый запрос
+        search_pattern = f"%{search}%"  # Шаблон для поиска подстроки
+        query = query.filter(
+            or_(
+                Announcements.title.ilike(search_pattern),  # Поиск в title (без учета регистра)
+                Announcements.content.ilike(search_pattern)  # Поиск в content (без учета регистра)
+            )
+        )
+    
+    announcements = query.all()
+    return [AnnouncementResponse.from_orm_with_author(a) for a in announcements]
+
+
 print("Existing tables:", Base.metadata.tables.keys())
 Base.metadata.create_all(bind=engine, checkfirst=True)

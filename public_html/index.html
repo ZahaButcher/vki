@@ -13,6 +13,10 @@
 
 <body>
     <header>
+        <div class="search">
+            <input type="text" id="searchText" name="search" placeholder="Поиск" oninput="search();">
+            <input type="button" value="Найти" onclick="search();">
+        </div>
         <input type="button" id="addCase" value="+">
         <input type="button" id="btnLogin" value="Кабинет" onclick="window.location.href='auth.html'">
         

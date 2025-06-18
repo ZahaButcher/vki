@@ -164,7 +164,39 @@ btnNoteClose.addEventListener("click", function(){
     
 });
 
+async function search(){
+    let formData = new FormData();
+    formData.append("search", document.getElementById("searchText").value);     
 
+    let response = await fetch("/search?search=" + document.getElementById("searchText").value);
+
+    if(response.ok){
+        let date = await response.json();
+        
+        console.log(date);
+    }
+    else{
+        console.log("Huinya");
+    }
+}
+// async function search(){
+//     let formData = new FormData();
+//     formData.append("search", document.getElementById("searchText").value);     
+
+//     let response = await fetch("/search",{
+//         method:"POST",
+//         body: formData
+//     });
+
+//     if(response.ok){
+//         let date = await response.json();
+        
+//         console.log(date);
+//     }
+//     else{
+//         console.log("Huinya");
+//     }
+// }
 
 addNote.addEventListener("click", send);
 // addNote.addEventListener("click", function(){ // Add Note
