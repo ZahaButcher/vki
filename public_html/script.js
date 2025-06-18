@@ -42,6 +42,8 @@ function addNotesDb(db){
         document.querySelector("main").append(temp);
     }
 }
+let main = document.querySelector("main");
+
 let addCase = document.getElementById("addCase");
 let addNote = document.getElementById("addNote");
 
@@ -165,8 +167,7 @@ btnNoteClose.addEventListener("click", function(){
 });
 
 async function search(){
-    let formData = new FormData();
-    formData.append("search", document.getElementById("searchText").value);     
+    main.innerHTML = '';
 
     let response = await fetch("/search?search=" + document.getElementById("searchText").value);
 
@@ -174,6 +175,7 @@ async function search(){
         let date = await response.json();
         
         console.log(date);
+        addNotesDb(date);
     }
     else{
         console.log("Huinya");
