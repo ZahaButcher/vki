@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <style>
+        :root{
+            /* black */
+            --back: rgb(13, 13, 13);
+            --kvadrat: rgb(25, 25, 25);
+            --textcolor: rgb(222, 222, 222);
+            --tojekvadrat: rgb(25, 25, 25);
+
+            /* --backColor: rgb(245, 245, 245); */
+            --backColor: rgb(252, 252, 252);
+            /* --caseColor: rgb(245, 245, 245); */
+            --CaseColor: rgb(255, 255, 255);
+            
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--backColor);
+            margin: 0;
+            padding: 20px;
+            /* min-height: 100vh; */
+        }
+        .registration-form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            /* border: 1px solid #ddd; */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input:hover{
+            box-shadow: 0px 0px 10px -5px black;
+            
+        }
+        input:focus {
+            /* border-color: #007bff; */
+            box-shadow: 0px 0px 10px -5px black;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            color: var(--back);
+            background-color: var(--CaseColor);
+            /* border: none; */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            /* background-color: #0056b3; */
+            box-shadow: 0px 0px 10px -5px black;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        .password-mismatch {
+            border-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-form">
+        <h1>Регистрация</h1>
+        <form id="registerForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="firstName">Имя:</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <div id="firstNameError" class="error">Пожалуйста, введите ваше имя</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastName">Фамилия:</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <div id="lastNameError" class="error">Пожалуйста, введите вашу фамилию</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Псевдоним:</label>
+                <input type="text" id="username" name="username" required>
+                <div id="usernameError" class="error">Пожалуйста, придумайте псевдоним</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Почта:</label>
+                <input type="text" id="email" name="email" required>
+                <div id="emailError" class="error">Пожалуйста, придумайте псевдоним</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+                <div id="passwordError" class="error">Пожалуйста, введите пароль</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Повторите пароль:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div id="confirmPasswordError" class="error">Пароли не совпадают</div>
+            </div>
+            
+            <button type="submit" onclick="alert('hui');">Зарегистрироваться</button>
+            <button onclick="window.location.href='auth.html'">Вход</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            
+            // Проверка заполненности полей
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            const username = document.getElementById('username');
+            const password = document.getElementById('password');
+            const email = document.getElementById('email');
+            const confirmPassword = document.getElementById('confirmPassword');
+            
+            // Сброс ошибок
+            document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+            confirmPassword.classList.remove('password-mismatch');
+            
+            // Проверка имени
+            if (!firstName.value.trim()) {
+                document.getElementById('firstNameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Проверка фамилии
+            if (!lastName.value.trim()) {
+                document.getElementById('lastNameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Проверка псевдонима
+            if (!username.value.trim()) {
+                document.getElementById('usernameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Проверка пароля
+            if (!password.value) {
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Проверка совпадения паролей
+            if (password.value !== confirmPassword.value) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                confirmPassword.classList.add('password-mismatch');
+                isValid = false;
+            }
+            
+            if (isValid) {
+        const form = document.getElementById('registerForm');
+        const formData = new FormData(form);
+        
+        fetch('/register', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { 
+                    // Обработка ошибок валидации
+                    for (const field in err.detail) {
+                        const errorElement = document.getElementById(`${field}Error`);
+                        if (errorElement) {
+                            errorElement.textContent = err.detail[field];
+                            errorElement.style.display = 'block';
+                        }
+                    }
+                    throw new Error('Ошибка регистрации');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert(`Регистрация успешна!`);
+            form.reset();
+            RedirectResponse(url="/", status_code=302)
+            // window.location.href = "";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    return false;
+}
+    </script>
+</body>
+</html>

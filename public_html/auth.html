@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <style>
+        :root{
+            /* black */
+            --back: rgb(13, 13, 13);
+            --kvadrat: rgb(25, 25, 25);
+            --textcolor: rgb(222, 222, 222);
+            --tojekvadrat: rgb(25, 25, 25);
+
+            /* --backColor: rgb(245, 245, 245); */
+            --backColor: rgb(252, 252, 252);
+            /* --caseColor: rgb(245, 245, 245); */
+            --CaseColor: rgb(255, 255, 255);
+            
+        }
+        html, body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        body{
+            
+        }
+        /* Стили остаются без изменений */
+        .errors { color: red; margin-bottom: 15px; }
+        input { 
+            
+            padding: 8px; 
+            margin: 5px 0; 
+            width: 100%; 
+            box-sizing: border-box; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input:hover{
+            box-shadow: 0px 0px 10px -5px black;
+        }
+        input.error { border: 2px solid red; }
+        .login-container {
+            width: 15%;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .login-btn { 
+            padding: 10px 15px; 
+            color: var(--back);
+            background-color: var(--CaseColor);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer; 
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .login-btn:hover {
+            /* background-color: #ffffff; */
+        }
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--back);
+            background-color: var(--CaseColor);
+            border: 1px solid #ccc;
+            text-decoration: none;
+        }
+        button:hover{
+            box-shadow: 0px 0px 10px -5px black;
+        }
+        /* .register-link:hover { text-decoration: underline; } */
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 style="text-align: center;">Вход в систему</h2>
+        <div id="errorMessage" class="errors" style="text-align: center;"></div>
+
+        <!-- Изменения в форме: добавлены action/method -->
+        <form id="loginForm" action="/login" method="POST">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Введите ваш email">
+            </div>
+            <div>
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required placeholder="Введите пароль">
+            </div>
+            <div style="margin-top: 20px;">
+                <button type="submit" class="login-btn">Войти</button>
+                <button class="login-btn" onclick="window.location.href='regform.html'">Нет аккаунта? Зарегистрируйтесь</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function getCookie(name){
+            let allcookie = document.cookie.split(";").map(str => str.trim());
+            for(let i of allcookie){
+                if(i.includes(name)){
+                    return i.slice(i.indexOf('=')+1);
+                }
+            }
+            return false;
+        }
+        if(getCookie("user_id")){
+            window.location.href = '/static'; //сделать редирект в лк
+        }
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Отменяем стандартную отправку
+            
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = '';
+            
+            // Сбрасываем стили ошибок
+            document.getElementById('email').classList.remove('error');
+            document.getElementById('password').classList.remove('error');
+            
+            try {
+                const formData = new URLSearchParams(new FormData(this));
+                
+                const response = await fetch(this.action, {
+                    method: this.method,
+                    credentials: 'include',
+                    headers: { 'Accept': 'application/json' },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    window.location.href = '/static';
+                } else {
+                    const errorData = await response.json();
+                    errorElement.textContent = errorData.detail || 'Ошибка авторизации';
+                    document.getElementById('email').classList.add('error');
+                    document.getElementById('password').classList.add('error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+                    errorElement.textContent = 'Не удалось подключиться к серверу';
+                } else {
+                    errorElement.textContent = 'Произошла ошибка';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

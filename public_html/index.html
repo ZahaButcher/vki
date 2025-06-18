@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="index.ico" type="image/x-icon">
+    
     <title>GangBang</title>
     
 </head>
@@ -12,7 +14,7 @@
 <body>
     <header>
         <input type="button" id="addCase" value="+">
-        <input type="button" id="btnLogin" value="Войти">
+        <input type="button" id="btnLogin" value="Кабинет" onclick="window.location.href='auth.html'">
         
         <div class="note" id="note">
             <div class="noteMain">
@@ -24,8 +26,11 @@
                     <option value="test">Тестирование</option>
                     <option value="done">Готово</option>
                 </select>-->
-                <input type="text" id="noteh3" placeholder="Тема">
-                <textarea name="" id="noteTextArea" placeholder="Писать здесь..."></textarea>
+                <form id="addNotes" action="/about" method="post">
+
+                </form>
+                    <input form="addNotes" type="text" id="noteh3" name="title" placeholder="Тема" autocomplete="off"> 
+                    <textarea form="addNotes"  id="noteTextArea" name="content" placeholder="Писать здесь..."></textarea>
                 <input type="submit" id="addNote" value="Добавить">
                 <!-- <textarea name="" id=""></textarea> -->
             </div>
