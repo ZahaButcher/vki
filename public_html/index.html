@@ -6,12 +6,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="index.ico" type="image/x-icon">
-    
+    <style>
+        .readGlav{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 99;
+            padding: 2%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+            cursor: pointer;
+            transition: .3s;
+        }
+        
+        .readBack{
+            width: 80%;
+            height: 100%;
+            padding: 2%;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 2px 3px #00000029;
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .readTitle{
+            text-align: center;
+            margin-bottom: 10px;
+            /* flex-grow: 1; */
+
+        }
+        .readContent{
+            text-align: justify;
+            font-size: 120%;
+            /* flex-grow: 2; */
+            
+        }
+        .readInfo{
+            position: relative;
+            /* bottom: -100px; */
+        }
+        .readInfo{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            /* flex-grow: 1; */
+
+            
+        }
+        .file{
+            width: 150px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            /* overflow: hidden; */
+            text-decoration: none;
+            color: black;
+            border-radius: 15px;
+            box-shadow: 0px 0px 1px 1px #00000029;
+        }
+        .fileImg{
+            display: block;
+            max-width:50%; 
+            height:auto;
+            /* width: auto; */
+        }
+    </style>
     <title>GangBang</title>
     
 </head>
 
 <body>
+    <div class="readGlav">
+        <div class="readBack">
+            <h2 class="readTitle">Title</h2>
+            <p class="readContent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, deserunt et ad quae repellat soluta natus a repellendus iusto, enim aperiam eligendi nesciunt distinctio officia minima iure tempore, possimus commodi!Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic, quasi! Aut placeat voluptatem, unde nostrum explicabo nesciunt. Saepe ad veritatis hic reprehenderit blanditiis quos officia incidunt placeat in. Necessitatibus, est.</p>
+            <div class="readFiles">
+                <a href="uploads/sliva.jpg" download="uploads/sliva.jpg" class="file" >
+                    <img class="fileImg" src="file.png" alt="file">
+                    <p class="fileName">Защита.docx</p>
+                </a>
+            </div>
+            <div class="readInfo">
+                <p id="author">Захар</p>
+                <p id="date">25.06.2025</p>
+            </div>
+        </div>
+        <script>
+            
+        </script>
+    </div>
     <header>
         <div class="search">
             <input type="text" id="searchText" name="search" placeholder="Поиск" oninput="search();">
@@ -30,12 +121,11 @@
                     <option value="test">Тестирование</option>
                     <option value="done">Готово</option>
                 </select>-->
-                <form id="addNotes" action="/about" method="post">
-
-                </form>
-                    <input form="addNotes" type="text" id="noteh3" name="title" placeholder="Тема" autocomplete="off"> 
-                    <textarea form="addNotes"  id="noteTextArea" name="content" placeholder="Писать здесь..."></textarea>
-                <input type="submit" id="addNote" value="Добавить">
+                <form id="addNotes" action="/notes" method="post" enctype="multipart/form-data"></form>
+                    <input form="addNotes" type="text" id="noteh3" name="title" placeholder="Тема" autocomplete="off" required> 
+                    <textarea form="addNotes"  id="noteTextArea" name="content" placeholder="Писать здесь..." required></textarea>
+                    <input form="addNotes" type="file" name="photos" multiple>
+                    <input type="submit" id="addNote" value="Добавить">
                 <!-- <textarea name="" id=""></textarea> -->
             </div>
         </div>
@@ -90,6 +180,7 @@
 
         <template id="tempCase">
             <div class="case">
+                <input class="caseid" type="number" style="display: none;">
                 <h3 class="heading"></h3>
                 <p class="info"></p>
                 <div class="dateAuthor">

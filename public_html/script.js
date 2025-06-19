@@ -35,7 +35,10 @@ function addNotesDb(db){
     for(let i in db){
         // console.log(i);
         let temp = tempCase.content.cloneNode(true);
-        temp.querySelector(".heading").textContent = db[i].title;
+        // console.log(temp);
+        // console.log("id: ", db[i]["id"]);
+        temp.querySelector(".caseid").value = db[i]["id"];
+        temp.querySelector(".heading").textContent = db[i]["title"];
         temp.querySelector(".info").textContent = db[i]["content"];
         temp.querySelector(".author").textContent = db[i]["author_name"];
         temp.querySelector(".date").textContent = formatDate(db[i]["publication_data"]);
@@ -61,6 +64,18 @@ let note = document.getElementById("note");
 let noteh3 = document.getElementById("noteh3"); // Тема из окна создания
 let btnNoteClose = document.getElementById("btnNoteClose");
 
+let readGlav = document.querySelector(".readGlav");
+let readTitle = document.querySelector(".readTitle");
+let readContent = document.querySelector(".readContent");
+
+
+readGlav.addEventListener('click', (event) => {
+    // Проверяем, что кликнули именно по readGlav, а не по его детям
+    if (event.target === readGlav) {
+        readGlav.style.display = 'none';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
     // const container = document.getElementById('announcements-container');
     console.log("DOMContentLoaded");
@@ -82,11 +97,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         let cases = document.querySelectorAll(".case");
 
         cases.forEach(elem => { //Нажатие на заметки
-            // console.log(elem);
-            elem.addEventListener("click", function(){
-                console.log(elem);
-                elem.classList.add("caseClick");
-                elem.classList.remove("case");
+            
+            elem.addEventListener("click", ()=>{
+                let tid = elem.querySelector(".caseid").value;
+                
+                console.log(tid);
+                console.log(announcements[tid]);
+
+                readTitle.textContent = announcements[tid]["title"];
+                readContent.textContent = announcements[tid]["content"];
+                readGlav.style.display = 'flex';
+
+
+
+                // elem.classList.add("caseClick");
+                // elem.classList.remove("case");
                 // elem.style.width = "90%";
                 // elem.style.height = "90vh";
                 // elem.style.position = "absolute";
@@ -102,6 +127,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 files.className = "files";
                 elem.append(files);
                 let no = document.createElement("div"); //no - nwe object
+
+
                 
             });
         });
@@ -174,31 +201,15 @@ async function search(){
     if(response.ok){
         let date = await response.json();
         
-        console.log(date);
+        // console.log(date);
         addNotesDb(date);
     }
     else{
         console.log("Huinya");
     }
 }
-// async function search(){
-//     let formData = new FormData();
-//     formData.append("search", document.getElementById("searchText").value);     
 
-//     let response = await fetch("/search",{
-//         method:"POST",
-//         body: formData
-//     });
 
-//     if(response.ok){
-//         let date = await response.json();
-        
-//         console.log(date);
-//     }
-//     else{
-//         console.log("Huinya");
-//     }
-// }
 
 addNote.addEventListener("click", send);
 // addNote.addEventListener("click", function(){ // Add Note

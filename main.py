@@ -2,7 +2,10 @@ from models import *
 from database import *
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_, desc
-from fastapi import Depends, FastAPI, Body, HTTPException, Request, Cookie, Form
+from fastapi import Depends, FastAPI, Body, HTTPException, Request, Cookie, Form, UploadFile, File
+from pathlib import Path
+import shutil
+import uuid
 from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -158,6 +161,16 @@ async def register_user(
 def get_people(db: Session = Depends(get_db)):
     return db.query(Person).all()
 
+class PersonResponse(BaseModel):
+    id: int
+    name: str
+    age: int
+    # другие поля вашей модели Person
+
+@app.get("/api/users", response_model=List[PersonResponse])
+def get_people(db: Session = Depends(get_db)):
+    users = db.query(Person).all()
+    return [{"id": user.id, "name": user.name, "age": user.age} for user in users]
 
 
 @app.post("/login")
@@ -252,7 +265,42 @@ def get_person(id, db: Session = Depends(get_db)):
     #если пользователь найден, отправляем его
     return person
   
-@app.post("/notes")
+@app.put("/api/usersOld")
+def edit_person(data  = Body(), db: Session = Depends(get_db)):
+   
+    # получаем пользователя по id
+    person = db.query(Person).filter(Person.id == data["id"]).first()
+    # если не найден, отправляем статусный код и сообщение об ошибке
+    if person == None: 
+        return JSONResponse(status_code=404, content={ "message": "Пользователь не найден"})
+    # если пользователь найден, изменяем его данные и отправляем обратно клиенту
+    person.age = data["age"]
+    person.name = data["name"]
+    db.commit() # сохраняем изменения 
+    db.refresh(person)
+    return person
+
+@app.put("/api/users")
+def edit_person(data  = Body(), db: Session = Depends(get_db)):
+   
+    # получаем пользователя по id
+    person = db.query(Person).filter(Person.id == data["id"]).first()
+    # если не найден, отправляем статусный код и сообщение об ошибке
+    if person == None: 
+        return JSONResponse(status_code=404, content={ "message": "Пользователь не найден"})
+    # если пользователь найден, изменяем его данные и отправляем обратно клиенту
+    person.first_name = data["first_name"]
+    person.last_name = data["last_name"]
+    person.email = data["email"]
+    person.password = data["password"]
+    person.role = data["role"]
+    person.username = data["username"]
+    db.commit() # сохраняем изменения 
+    db.refresh(person)
+    return person
+
+
+@app.post("/notesOld")
 async def create_note(
     request: Request,
     title: str = Form(...),
@@ -269,9 +317,66 @@ async def create_note(
 
     db.add(note)
     db.commit()
-    return {"mess":"work"}
+    # return {"mess":"work"}
+
     # return RedirectResponse("/", status_code=303)
 
+
+@app.post("/notes")
+async def create_note(
+    title: str = Form(...),
+    content: str = Form(...),
+    photos: List[UploadFile] = File(default=[]),  # Принимаем список файлов
+    author_id: str = Cookie(default=None, alias="user_id"),
+    db: Session = Depends(get_db)
+):
+    if not author_id:
+        raise HTTPException(status_code=401, detail="Требуется авторизация")
+
+    saved_files = []
+    
+    if photos and any(photo.filename for photo in photos):
+        for photo in photos:
+            original_filename = photo.filename  # Получаем оригинальное имя
+        
+            # Заменяем опасные символы в имени файла
+            safe_filename = (
+                original_filename
+                .replace(" ", "_")  # Заменяем пробелы
+                .replace("/", "-")  # Заменяем слэши
+            )
+        
+            filepath = Path("public_html/uploads") / safe_filename
+        
+            # Проверяем, не существует ли файл
+            counter = 1
+            while filepath.exists():
+                # Если файл существует, добавляем номер к имени
+                stem = Path(safe_filename).stem
+                ext = Path(safe_filename).suffix
+                safe_filename = f"{stem}_{counter}{ext}"
+                filepath = Path("uploads") / safe_filename
+                counter += 1
+        
+            # Сохраняем файл
+            with open(filepath, "wb") as buffer:
+                shutil.copyfileobj(photo.file, buffer)
+        
+            saved_files.append(safe_filename)  # Сохраняем обработанное имя
+
+    # Сохраняем в БД как JSON
+    note = Announcements(
+        title=title,
+        content=content,
+        author_id=author_id,
+        publication_data=date.today(),
+        last_updated_date=date.today(),
+        attachment=json.dumps(saved_files)  # Сохраняем массив имен
+    )
+    
+    db.add(note)
+    db.commit()
+    # return RedirectResponse("/", status_code=303)
 
 
     

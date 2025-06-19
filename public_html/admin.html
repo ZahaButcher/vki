@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование пользователя</title>
+    <style>
+        :root{
+            /* black */
+            --back: rgb(13, 13, 13);
+            --kvadrat: rgb(25, 25, 25);
+            --textcolor: rgb(222, 222, 222);
+            --tojekvadrat: rgb(25, 25, 25);
+
+            /* --backColor: rgb(245, 245, 245); */
+            --backColor: rgb(252, 252, 252);
+            /* --caseColor: rgb(245, 245, 245); */
+            --CaseColor: rgb(255, 255, 255);
+            
+        }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--CaseColor);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            color: var(--back);
+            padding: 10px 15px;
+            background-color: var(--CaseColor);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            box-shadow: 0px 0px 10px -5px black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактирование пользователя</h1>
+    
+    <form id="editUserForm">
+        <div class="form-group">
+            <input type="hidden" id="userId">
+            
+            <label for="firstName">Имя:</label>
+            <input type="text" id="firstName" required>
+            
+            <label for="lastName">Фамилия:</label>
+            <input type="text" id="lastName" required>
+            
+            <label for="username">Логин:</label>
+            <input type="text" id="username" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" required>
+            
+            <label for="role">Роль:</label>
+            <select id="role" required>
+                <option value="user">Пользователь</option>
+                <option value="admin">Администратор</option>
+                <option value="moderator">Модератор</option>
+            </select>
+        </div>
+        
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем ID пользователя из URL (пример: ?id=1)
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('id');
+            
+            if (userId) {
+                // Загружаем данные пользователя
+                fetch(`/api/users/${userId}`)
+                    .then(response => response.json())
+                    .then(user => {
+                        document.getElementById('userId').value = user.id;
+                        document.getElementById('firstName').value = user.first_name;
+                        document.getElementById('lastName').value = user.last_name;
+                        document.getElementById('username').value = user.username;
+                        document.getElementById('email').value = user.email;
+                        document.getElementById('password').value = user.password;
+                        document.getElementById('role').value = user.role;
+                    })
+                    .catch(error => {
+                        console.error('Ошибка загрузки данных:', error);
+                        alert('Не удалось загрузить данные пользователя');
+                    });
+            }
+            // Обработка отправки формы
+            document.getElementById('editUserForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const userData = {
+                    id: document.getElementById('userId').value,
+                    first_name: document.getElementById('firstName').value,
+                    last_name: document.getElementById('lastName').value,
+                    username: document.getElementById('username').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    role: document.getElementById('role').value
+                };
+
+                fetch('/api/users', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
+                .then(updatedUser => {
+                    alert('Данные успешно обновлены!');
+                    console.log('Обновленные данные:', updatedUser);
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    alert(error.message || 'Произошла ошибка при обновлении данных');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
